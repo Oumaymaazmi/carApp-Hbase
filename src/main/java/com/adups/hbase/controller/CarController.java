@@ -12,12 +12,15 @@ public class CarController {
     @Autowired
     private CarService carService;
 
+
     @PostMapping("/")
+    @CrossOrigin(origins = "http://localhost:3000")
     public Car postObject(@RequestBody Car car) {
         carService.insert(car);
         return car;
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/RowKey/{rowKey}")
     public Car findByRowKey(@PathVariable String rowKey) {
         return carService.findByRowKey(rowKey);
@@ -29,6 +32,7 @@ public class CarController {
         carService.deletByRowKey(rowKey);
 
     }
+    @CrossOrigin(origins = "http://localhost:3000")
     @PutMapping("/")
     public String update(@RequestBody Car car){
         return carService.update(car);

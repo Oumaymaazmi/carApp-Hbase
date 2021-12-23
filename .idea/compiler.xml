@@ -7,8 +7,9 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="kafka-hbase" />
-        <module name="Spring-Boot-Hbase-Starter-main" />
+        <module name="carApp-Hbase" />
         <module name="hbase-master" />
+        <module name="Spring-Boot-Hbase-Starter-main" />
       </profile>
     </annotationProcessing>
   </component>
