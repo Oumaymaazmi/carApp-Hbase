@@ -28,7 +28,7 @@ public class CarController {
         return carService.findByRowKey(rowKey);
 
     }
-
+    @CrossOrigin(origins = "http://localhost:3000")
     @DeleteMapping("/RowKey/{rowKey}")
     public void deletByRowKey(@PathVariable String rowKey) {
         carService.deletByRowKey(rowKey);

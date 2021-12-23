@@ -8,6 +8,7 @@ import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.*;
 import org.apache.hadoop.hbase.filter.BinaryComparator;
+import org.apache.hadoop.hbase.filter.PrefixFilter;
 import org.apache.hadoop.hbase.filter.RowFilter;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.slf4j.Logger;
@@ -89,20 +90,24 @@ public class CarServiceImpl implements CarService {
         Connection connection = ConnectionFactory.createConnection(conf);
         Table table = connection.getTable(TableName.valueOf("car"));
 
-        Scan scan = new Scan();
+        Scan scan = new Scan(Bytes.toBytes("1"));
 
-//        scan.addColumn(Bytes.toBytes("model"),  Bytes.toBytes("marque"));
+      // scan.addColumn(Bytes.toBytes("rowKey"), null);
 //        scan.setFilter(new RowFilter(CompareOperator.NOT_EQUAL,
 //                new BinaryComparator(Bytes.toBytes(1))));
         ResultScanner scanner = table.getScanner(new Scan());
         Result[] bar = scanner.next(100);
-        List<Car> car = new ArrayList<>();
+        List<Car> cars = new ArrayList<>();
         for(int i=0;i<bar.length;i++){
             System.out.println(bar[i]);
-            car.add(MapingHbase.toObject(bar[i]));
+            Car car = MapingHbase.toObject(bar[i]);
+            car.setRowKey(Bytes.toString(bar[i].getRow()));
+            cars.add(car);
+
+
 
         }
-        return car;
+        return cars;
     }
 
 }
