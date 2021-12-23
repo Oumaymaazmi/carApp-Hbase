@@ -31,6 +31,7 @@ public class HBaseCommandController {
 	}
 
 
+
 	@DeleteMapping("/table/{tableName}")
 	public String deleteTable(@PathVariable String tableName) throws Exception {
 		hBaseService.deleteTable(tableName);

@@ -3,9 +3,12 @@ package com.adups.hbase.service.impl;
 import com.adups.hbase.bean.Car;
 import com.adups.hbase.service.CarService;
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.hbase.CompareOperator;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.*;
+import org.apache.hadoop.hbase.filter.BinaryComparator;
+import org.apache.hadoop.hbase.filter.RowFilter;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -80,17 +84,25 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public List<Car> findAll() {
-        Connection connection = null;
-        try {
-            connection = ConnectionFactory.createConnection(configuration);
-            Table table = connection.getTable(TableName.valueOf("car"));
-            Scan scan = new Scan();
-            scan.getFamilies();
-            ResultScanner scanner = table.getScanner(scan);
-        } catch (IOException e) {
-            e.printStackTrace();
+    public List<Car> findAll() throws IOException {
+        Configuration conf = HBaseConfiguration.create();
+        Connection connection = ConnectionFactory.createConnection(conf);
+        Table table = connection.getTable(TableName.valueOf("car"));
+
+        Scan scan = new Scan();
+
+//        scan.addColumn(Bytes.toBytes("model"),  Bytes.toBytes("marque"));
+//        scan.setFilter(new RowFilter(CompareOperator.NOT_EQUAL,
+//                new BinaryComparator(Bytes.toBytes(1))));
+        ResultScanner scanner = table.getScanner(new Scan());
+        Result[] bar = scanner.next(100);
+        List<Car> car = new ArrayList<>();
+        for(int i=0;i<bar.length;i++){
+            System.out.println(bar[i]);
+            car.add(MapingHbase.toObject(bar[i]));
+
         }
-        return null;
+        return car;
     }
+
 }
