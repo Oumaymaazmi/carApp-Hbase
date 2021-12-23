@@ -6,6 +6,8 @@ import com.adups.hbase.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/hbase/car")
 public class CarController {
@@ -34,4 +36,10 @@ public class CarController {
         return carService.update(car);
     }
 
+
+    @GetMapping("/")
+    public List<Car> findAll() throws Exception {
+        return carService.findAll();
+
+    }
 }

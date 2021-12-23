@@ -69,8 +69,6 @@ public class HBaseServiceImpl implements IHBaseService {
 
 
 
-
-
     @Override
     public List<Cell> scanRegexRowKey(String tableName, String regexKey) {
         try (Connection connection = ConnectionFactory.createConnection(configuration);
