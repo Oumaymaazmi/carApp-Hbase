@@ -44,9 +44,8 @@ public class CarServiceImpl implements CarService {
     @Override
     public Car findByRowKey(String rowKey) {
         try {
-            Configuration conf = HBaseConfiguration.create();
-            Connection connection = null;
-            connection = ConnectionFactory.createConnection(conf);
+
+            Connection connection = ConnectionFactory.createConnection(configuration);
             Table table = connection.getTable(TableName.valueOf("car"));
             Get g = new Get(Bytes.toBytes(rowKey));
             Result result = table.get(g);
@@ -89,15 +88,7 @@ public class CarServiceImpl implements CarService {
         Configuration conf = HBaseConfiguration.create();
         Connection connection = ConnectionFactory.createConnection(conf);
         Table table = connection.getTable(TableName.valueOf("car"));
-
-        Scan scan = new Scan(Bytes.toBytes("1"));
-
-      // scan.addColumn(Bytes.toBytes("rowKey"), null);
-        PrefixFilter prefixFilter = new PrefixFilter(Bytes.toBytes("1"));
-        scan.setFilter(prefixFilter);
-//        scan.setFilter(new RowFilter(CompareOperator.NOT_EQUAL,
-//                new BinaryComparator(Bytes.toBytes(1))));
-        ResultScanner scanner = table.getScanner(scan);
+        ResultScanner scanner = table.getScanner(new Scan());
         Result[] bar = scanner.next(100);
         List<Car> cars = new ArrayList<>();
         for(int i=0;i<bar.length;i++){
@@ -105,9 +96,6 @@ public class CarServiceImpl implements CarService {
             Car car = MapingHbase.toObject(bar[i]);
             car.setRowKey(Bytes.toString(bar[i].getRow()));
             cars.add(car);
-
-
-
         }
         return cars;
     }

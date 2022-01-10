@@ -30,7 +30,7 @@ public class HBaseServiceImpl implements IHBaseService {
     private Configuration configuration;
 
     @Override
-    public void createTable(String tableName, String... families) throws IOException {
+    public void createTable(String tableName) throws IOException {
         Configuration conf = HBaseConfiguration.create();
         Connection connection = ConnectionFactory.createConnection(conf);
         Admin admin = connection.getAdmin();

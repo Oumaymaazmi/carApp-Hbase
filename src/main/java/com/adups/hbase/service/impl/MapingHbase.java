@@ -41,8 +41,8 @@ public class MapingHbase {
         json += "}";
         System.out.println(json);
         Gson gg = new Gson();
-        Car cc = gg.fromJson(json, Car.class);
-        return cc;
+        Car car = gg.fromJson(json, Car.class);
+        return car;
     }
 
     public static Put toHbase(Car car) {

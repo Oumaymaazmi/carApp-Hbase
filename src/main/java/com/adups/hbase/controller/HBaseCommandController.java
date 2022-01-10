@@ -26,7 +26,7 @@ public class HBaseCommandController {
 	@GetMapping(value = "/")
 
 	public String createTable() throws Exception {
-		hBaseService.createTable("car", "info");
+		hBaseService.createTable("car");
 		return " table create success!";
 	}
 

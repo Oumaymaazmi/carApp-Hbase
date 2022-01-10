@@ -14,7 +14,7 @@ public interface IHBaseService {
      * @param tableName
      * @param families
      */
-    void createTable(String tableName, String... families) throws IOException;
+    void createTable(String tableName) throws IOException;
 
     /**
      * @param tableName
