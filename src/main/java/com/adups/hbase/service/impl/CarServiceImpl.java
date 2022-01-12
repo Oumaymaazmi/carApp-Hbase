@@ -88,6 +88,13 @@ public class CarServiceImpl implements CarService {
         Configuration conf = HBaseConfiguration.create();
         Connection connection = ConnectionFactory.createConnection(conf);
         Table table = connection.getTable(TableName.valueOf("car"));
+
+        Scan scan = new Scan(Bytes.toBytes("1"));
+
+      // scan.addColumn(Bytes.toBytes("rowKey"), null);
+//        scan.setFilter(new RowFilter(CompareOperator.NOT_EQUAL,
+//                new BinaryComparator(Bytes.toBytes(1))));
+
         ResultScanner scanner = table.getScanner(new Scan());
         Result[] bar = scanner.next(100);
         List<Car> cars = new ArrayList<>();
