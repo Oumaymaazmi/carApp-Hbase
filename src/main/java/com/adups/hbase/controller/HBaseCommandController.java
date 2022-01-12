@@ -37,33 +37,4 @@ public class HBaseCommandController {
 		hBaseService.deleteTable(tableName);
 		return "delete table success!";
 	}
-
-//	//http://localhost:18080/hbase/command/scan/
-//	@RequestMapping(value = "/hbase/command/scan", method = RequestMethod.GET)
-//	public String scanRegexRowKey() {
-//		String regexKey = "^.*\\+15022176018\\+20900$";
-//		List<Cell> result = hBaseService.scanRegexRowKey("ota_pre_record", regexKey);
-//		if (null==result) {
-//			System.out.println("result is null");
-//		}
-//		for (Cell cell : result) {
-//			System.out.println("rowKey:" + Bytes.toString(cell.getRowArray(), cell.getRowOffset(), cell.getRowLength()));
-//			System.out.println("family:" + Bytes.toString(cell.getFamilyArray(), cell.getFamilyOffset(), cell.getFamilyLength()));
-//			System.out.println("qualifier:" + Bytes.toString(cell.getQualifierArray(), cell.getQualifierOffset(), cell.getQualifierLength()));
-//			System.out.println("value:" + Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength()));
-//			System.out.println("Timestamp:" + cell.getTimestamp());
-//		}
-//		return "scan success";
-//	}
-//
-//	@RequestMapping(value = "/hbase/command/delete/allColumn", method = RequestMethod.GET)
-//	public String deleteAllColumn(@RequestParam(value = "rowKey") String rowKey) {
-//
-//		hBaseService.deleteAllColumn("ota_pre_record", rowKey);
-//		return "delete all column  success";
-//	}
-
-
-
-
 }
